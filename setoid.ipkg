@@ -22,6 +22,8 @@ modules
   , Data.Setoid
   , Data.Setoid.Definition
   , Data.Setoid.Either
+  , Data.Setoid.Indexed
+  , Data.Setoid.Indexed.Definition
   , Data.Setoid.List
   , Data.Setoid.Pair
   , Data.Setoid.Vect
