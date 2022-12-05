@@ -61,6 +61,18 @@ index x i = MkSetoid
     }
   }
 
+public export
+reindex : (a -> b) -> IndexedSetoid b -> IndexedSetoid a
+reindex f x = MkIndexedSetoid
+  { U = x.U . f
+  , equivalence = MkIndexedEquivalence
+    { relation   = \i => x.equivalence.relation (f i)
+    , reflexive  = \i => x.equivalence.reflexive (f i)
+    , symmetric  = \i => x.equivalence.symmetric (f i)
+    , transitive = \i => x.equivalence.transitive (f i)
+    }
+  }
+
 namespace ToSetoid
   public export
   irrelevantCast : (0 b : a -> Type) -> IndexedSetoid a
