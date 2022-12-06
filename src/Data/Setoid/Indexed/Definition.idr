@@ -85,6 +85,19 @@ record (~>) {0 a : Type} (x, y : IndexedSetoid a) where
   H : (i : a) -> x.U i -> y.U i
   homomorphic : IndexedSetoidHomomorphism x y H
 
+namespace Homomorphism
+  public export
+  bundle : ((i : a) -> index x i ~> index y i) -> x ~> y
+  bundle f = MkIndexedSetoidHomomorphism (\i => (f i).H) (\i => (f i).homomorphic)
+
+  public export
+  index : x ~> y -> (i : a) -> index x i ~> index y i
+  index f i = MkSetoidHomomorphism (f.H i) (f.homomorphic i)
+
+  public export
+  reindex : (f : a -> b) -> x ~> y -> reindex f x ~> reindex f y
+  reindex f g = bundle (\i => index g $ f i)
+
 public export
 mate : {y : IndexedSetoid a} -> ((i : a) -> x i -> y.U i) -> irrelevantCast x ~> y
 mate f = MkIndexedSetoidHomomorphism
