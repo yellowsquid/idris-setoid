@@ -75,12 +75,12 @@ Cast (a -> Type) (IndexedSetoid a) where
   cast b = irrelevantCast b
 
 public export 0
-IndexedSetoidHomomorphism : (x, y : IndexedSetoid a) -> (f : (i : a) -> x.U i -> y.U i) -> Type
+IndexedSetoidHomomorphism : (0 x, y : IndexedSetoid a) -> (0 f : (i : a) -> x.U i -> y.U i) -> Type
 IndexedSetoidHomomorphism x y f = (i : a) -> (a, b : x.U i)
   -> x.equivalence.relation i a b -> (y.equivalence.relation i `on` f i) a b
 
 public export
-record (~>) {0 a : Type} (x, y : IndexedSetoid a) where
+record (~>) {0 a : Type} (0 x, y : IndexedSetoid a) where
   constructor MkIndexedSetoidHomomorphism
   H : (i : a) -> x.U i -> y.U i
   homomorphic : IndexedSetoidHomomorphism x y H
@@ -123,7 +123,7 @@ pwEq : (0 x, y : IndexedSetoid a) -> Rel (x ~> y)
 pwEq x y f g = (i : a) -> (u : x.U i) -> y.equivalence.relation i (f.H i u) (g.H i u)
 
 public export
-(~~>) : (x, y : IndexedSetoid a) -> Setoid
+(~~>) : (0 x : IndexedSetoid a) -> (y : IndexedSetoid a) -> Setoid
 x ~~> y = MkSetoid (x ~> y) $ MkEquivalence
   { relation   = pwEq x y
   , reflexive  = \f, i, u => y.equivalence.reflexive i (f.H i u)
